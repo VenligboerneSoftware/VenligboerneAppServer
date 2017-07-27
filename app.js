@@ -1,23 +1,30 @@
 var express = require('express');
+var admin = require("firebase-admin");
 var app = express();
 
-// set the port of our application
-// process.env.PORT lets the port be set by Heroku
 var port = process.env.PORT || 8080;
 
-// set the view engine to ejs
 app.set('view engine', 'ejs');
 
-// make express look in the public directory for assets (css/js/img)
 app.use(express.static(__dirname + '/public'));
 
-// set the home page route
+var serviceAccount = require("test-de97f53719d3.json");
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+  databaseURL: "https://test-b5dbd.firebaseio.com/"
+});
+var db = admin.database();
+
 app.get('/', function(req, res) {
     res.render('index');
 });
 
 app.get('/test', function (req, res) {
-  res.send('AYYY LMAOO')
+  var ref = db.ref("users");
+  ref.once("value", function(snapshot) {
+    res.send(snapshot.val());
+  });
+
 })
 
 app.listen(port, function() {
