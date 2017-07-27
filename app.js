@@ -22,7 +22,7 @@ app.get('/', function(req, res) {
 app.get('/test', function (req, res) {
   var ref = db.ref("users");
   ref.once("value", function(snapshot) {
-    res.send(snapshot.val());
+    res.send("mmm";
   });
 
 })
