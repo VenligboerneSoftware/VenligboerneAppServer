@@ -19,7 +19,7 @@ app.get('/', function(req, res) {
 	res.render('index');
 });
 
-app.get('/test', function(req, res) {
+app.get('/test', async function(req, res) {
 	var ref = db.ref('users');
 	const response = await ref.once('value');
 	res.send('mmm', response.val());
