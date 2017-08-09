@@ -24,6 +24,7 @@ app.controller('appController', function(
 	var toastActive = false;
 	$scope.processing = false;
 	$scope.loading = 4;
+	$scope.permissionsList = ['normal', 'superuser', 'banned'];
 
 	$scope.auth
 		.$signInWithPopup('facebook')
@@ -75,6 +76,14 @@ app.controller('appController', function(
 				table[key].key = key;
 			}
 		});
+	};
+
+	$scope.banUser = function(user, users) {
+		$scope.cancelEdits(users);
+		console.log('Ban User', user);
+		var update_package = {};
+		update_package['permissions'] = 'banned';
+		firebaseRef.child('users/' + user.key).update(update_package);
 	};
 
 	$scope.file_changed = function(element, instance, field, bucket, tableStr) {
