@@ -18,13 +18,12 @@ app.controller('appController', function(
 	$firebaseAuth
 ) {
 	var firebaseRef = firebase.database().ref();
-	var toastActive = false;
-
-	$scope.processing = false;
-
-	$scope.loading = 4;
-
+	var storageRef = firebase.storage().ref();
 	$scope.auth = $firebaseAuth();
+
+	var toastActive = false;
+	$scope.processing = false;
+	$scope.loading = 4;
 
 	$scope.auth
 		.$signInWithPopup('facebook')
@@ -75,6 +74,56 @@ app.controller('appController', function(
 				table[key].editing = {};
 				table[key].key = key;
 			}
+		});
+	};
+
+	$scope.file_changed = function(element, instance, field, bucket, tableStr) {
+		$scope.$apply(function(scope) {
+			var photofile = element.files[0];
+			var reader = new FileReader();
+			reader.onload = function(e) {
+				var blob = new Blob([e.target.result], { type: 'image/jpeg' });
+
+				Materialize.toast('Uploading...', 500, '', function() {
+					toastActive = false;
+				});
+
+				var storageUrl = bucket + '/';
+				var storageRef = firebase.storage().ref(storageUrl + photofile.name);
+				console.warn(photofile); // Watch Screenshot
+				var uploadTask = storageRef.put(blob);
+
+				uploadTask.on(
+					'state_changed',
+					function progress(snapshot) {
+						var percentage =
+							snapshot.bytesTransferred / snapshot.totalBytes * 100;
+						// use the percentage as you wish, to show progress of an upload for example
+					}, // use the function below for error handling
+					function(error) {
+						switch (error.code) {
+							case 'storage/unauthorized':
+								// User doesn't have permission to access the object
+								break;
+
+							case 'storage/canceled':
+								// User canceled the upload
+								break;
+
+							case 'storage/unknown':
+								// Unknown error occurred, inspect error.serverResponse
+								break;
+						}
+					},
+					function complete() {
+						//This function executes after a successful upload
+						var downloadURL = uploadTask.snapshot.downloadURL;
+						$scope.editField(instance, tableStr, field, downloadURL);
+						instance.editing[field] = false;
+					}
+				);
+			};
+			reader.readAsArrayBuffer(photofile);
 		});
 	};
 

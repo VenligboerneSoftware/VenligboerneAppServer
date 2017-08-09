@@ -150,7 +150,15 @@
                                               <button class="btn hide" type="submit"></button>
                                           </form>
                                       </td>
-                                      <td><img ng-src="{{center.image}}" style="width:100px; height: 100px;"/></td>
+                                      <td class="clickable" ng-click="prepareEditField(centers, center, 'image')">
+                                        <img ng-hide="center.editing.image" ng-src="{{center.image}}" style="width:100px; height: 100px;"/>
+                                        <input
+                                          ng-show="center.editing.image"
+                                          ng-model="photo"
+                                          onchange="angular.element(this).scope().file_changed(this, angular.element(this).scope().center, 'image', 'centerImages', 'centers')"
+                                          type="file" accept="image/*"
+                                        />
+                                      </td>
                                   </tr>
                               </tbody>
                           </table>
