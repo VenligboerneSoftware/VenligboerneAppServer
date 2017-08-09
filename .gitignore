@@ -57,3 +57,5 @@ typings/
 # dotenv environment variables file
 .env
 
+# Mac generated file system info
+.DS_Store
