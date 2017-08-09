@@ -91,7 +91,8 @@
                                       <th data-field="name">Name</th>
                                       <th data-field="flagged">Flagged</th>
                                       <th data-field="flag_message">Flag Message</th>
-                                      <th data-field="facebookUID">Facebook UID</th>
+                                      <th data-field="permissions">Permissinons</th>
+                                      <th data-field="ban">Ban User</th>
                                   </tr>
                               </thead>
                               <tbody>
@@ -99,8 +100,8 @@
                                       <td>{{user.name}}</td>
                                       <td>{{user.flagged}}</td>
                                       <td>{{user.flag_message}}</td>
-                                      <td>{{user.facebookUID}}</td>
-                                      <td><a class="waves-effect waves-light btn red">Ban User</a></td>
+                                      <td>{{user.permissions}}</td>
+                                      <td class="clickable" ng-click="banUser(user, users)"><a class="waves-effect waves-light btn red">Ban User</a></td>
                                   </tr>
                               </tbody>
                           </table>
@@ -201,8 +202,24 @@
                                               <button class="btn hide" type="submit"></button>
                                           </form>
                                       </td>
-                                      <td><img ng-src="{{category.src}}" style="width:50px; height: 50px;"/></td>
-                                      <td><img ng-src="{{category.OfferPin}}" style="width:50px; height: 50px;"/></td>
+                                      <td class="clickable" ng-click="prepareEditField(categories, category, 'src')">
+                                        <img ng-hide="category.editing.src" ng-src="{{category.src}}" style="width:50px; height: 50px;"/>
+                                        <input
+                                          ng-show="category.editing.src"
+                                          ng-model="photo"
+                                          onchange="angular.element(this).scope().file_changed(this, angular.element(this).scope().category, 'src', 'icons', 'icons')"
+                                          type="file" accept="image/*"
+                                        />
+                                      </td>
+                                      <td class="clickable" ng-click="prepareEditField(categories, category, 'OfferPin')">
+                                        <img ng-hide="category.editing.OfferPin" ng-src="{{category.OfferPin}}" style="width:50px; height: 50px;"/>
+                                        <input
+                                          ng-show="category.editing.OfferPin"
+                                          ng-model="photo"
+                                          onchange="angular.element(this).scope().file_changed(this, angular.element(this).scope().category, 'OfferPin', 'pins', 'icons')"
+                                          type="file" accept="image/*"
+                                        />
+                                      </td>
                                   </tr>
                               </tbody>
                           </table>
