@@ -1,5 +1,6 @@
 var express = require('express');
 var admin = require('firebase-admin');
+var pinify = require('./pinify.js');
 var app = express();
 
 var port = process.env.PORT || 8080;
@@ -17,6 +18,12 @@ app.use(express.static(__dirname + '/public'));
 
 app.get('/', function(req, res) {
 	res.render('index');
+});
+
+app.get('/jimp', function(req, res) {
+	pinify(req.query.input, function(buffer) {
+		res.send(buffer);
+	});
 });
 
 app.listen(port, function() {
