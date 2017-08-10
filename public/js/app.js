@@ -143,11 +143,21 @@ app.controller('appController', function(
 		firebaseRef.child(tableStr + '/' + instance.key).remove();
 	};
 
+	//This is so stupid lol
 	$scope.removePost = function(tableStr, posts, instance) {
 		$scope.cancelEdits(posts);
 		if (instance.applications) {
 			Object.keys(instance.applications).forEach(function(key) {
-				firebaseRef.child('applications' + '/' + key).remove();
+				firebaseRef
+					.child('applications' + '/' + key)
+					.once('value')
+					.then(function(snapshot) {
+						var applicant = snapshot.val().applicant;
+						firebaseRef.child('applications' + '/' + key).remove();
+						firebaseRef
+							.child('users' + '/' + applicant + '/applications' + key)
+							.remove();
+					});
 			});
 		}
 		firebaseRef.child('posts' + '/' + instance.key).remove();
