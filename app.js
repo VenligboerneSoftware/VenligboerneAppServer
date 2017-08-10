@@ -24,6 +24,10 @@ app.get('/centers', function(req, res) {
 	res.render('centers');
 });
 
+app.get('/language', function(req, res) {
+	res.render('language');
+});
+
 app.get('/categories', function(req, res) {
 	res.render('categories');
 });

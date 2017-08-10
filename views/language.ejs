@@ -15,6 +15,10 @@
     <!-- initialize the SDK after all desired features are loaded -->
     <script defer src="https://test-b5dbd.firebaseapp.com/__/firebase/init.js"></script>
 
+    <!-- CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/css/materialize.min.css" rel='stylesheet' type='text/css'>
+    <link href="css/site.css" rel='stylesheet' type='text/css'>
+
     <!-- Load FirebaseUI for Auth popup -->
     <script src="https://cdn.firebase.com/libs/firebaseui/2.2.1/firebaseui.js"></script>
     <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/2.2.1/firebaseui.css" />
@@ -29,9 +33,13 @@
    <script type="text/javascript" src="js/pqgrid.min.js" ></script>
   </head>
   <body>
-    <div style="max-width: 800px">
-      <h2>Welcome to the Internationalization Control Panel</h2>
-      <p>
+    <div class="center-align" style="margin-top: 30px;">
+        <a href="/" class="waves-effect waves-light btn blue">Admin Portal</a>
+    </div>
+
+    <div class="center-align container" >
+      <h2 class="center-align">Welcome to the Internationalization Control Panel</h2>
+      <p class="center-align">
         Here you can edit how the Venligboerne app translates to various languages.
         Using the table presented here, you can make basic edit existing entries. The
         changes will not saved permanently (or visible in the app) until you click
@@ -52,17 +60,19 @@
         are sure they are correct, click "Save". Your changes should now be visible in the
         app.
       </p>
+
+      <input type="submit" id="save_button" value="Save" />
+      <input type="submit" id="download_button" value="Download" />
+
+      <label for="upload" id="upload_button">Upload</label>
+      <input type="file" id="upload" name="upload" style="display: none" />
+
+      <a style="display: none" id="download" download="language.xls">Download</a>
+
+      <div id="grid_array" class="center-align" style="margin-top: 20px"></div>
     </div>
 
-    <input type="submit" id="save_button" value="Save" />
-    <input type="submit" id="download_button" value="Download" />
 
-    <label for="upload" id="upload_button">Upload</label>
-    <input type="file" id="upload" name="upload" style="display: none" />
-
-    <a style="display: none" id="download" download="language.xls">Download</a>
-
-    <div id="grid_array"></div>
 
     <script>
     const grid = $('#grid_array');
@@ -70,26 +80,7 @@ const row_sep = '\r\n';
 const col_sep = '\t';
 var header;
 var first_entry;
-// initLoginUI
-// ------------------------------------------------------------------
-// Redirect the user to the Google sign in page.
-function signin() {
-	var provider = new firebase.auth.GoogleAuthProvider();
-	provider.setCustomParameters({
-		prompt: 'select_account'
-	});
-	firebase.auth().signInWithRedirect(provider);
-	firebase
-		.auth()
-		.getRedirectResult()
-		.then(function(result) {
-			console.log(result);
-		})
-		.catch(function(error) {
-			alert('Sign in failed: ' + error);
-			console.error(error);
-		});
-}
+
 // initGridWithContents
 // -------------------------------------------------------------------
 // Turn the DOM element specified in the "grid" global, and turn it into
