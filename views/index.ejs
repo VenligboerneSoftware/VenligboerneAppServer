@@ -88,7 +88,7 @@
                           <table class="highlight bordered centered responsive-table">
                               <thead>
                                   <tr>
-                                      <th data-field="name">Name</th>
+                                      <th data-field="displayName">Name</th>
                                       <th data-field="flagged">Flagged</th>
                                       <th data-field="flag_message">Flag Message</th>
                                       <th data-field="permissions">Permissinons</th>
@@ -99,7 +99,7 @@
                               </thead>
                               <tbody>
                                   <tr ng-repeat="user in users">
-                                      <td>{{user.name}}</td>
+                                      <td>{{user.displayName}}</td>
                                       <td>{{user.flagged}}</td>
                                       <td>{{user.flag_message}}</td>
                                       <td>{{user.permissions}}</td>
