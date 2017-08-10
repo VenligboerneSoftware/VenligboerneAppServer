@@ -20,33 +20,32 @@ app.controller('appController', function(
 	var firebaseRef = firebase.database().ref();
 	var storageRef = firebase.storage().ref();
 	$scope.auth = $firebaseAuth();
+	$scope.loggedIn = false;
 
 	var toastActive = false;
 	$scope.processing = false;
 	$scope.loading = 4;
-	$scope.permissionsList = ['normal', 'superuser', 'banned'];
-
-	$scope.auth
-		.$signInWithPopup('facebook')
-		.then(function(result) {
-			console.log('Signed in as:', result.user.uid);
-			//$scope.onLoad();
-		})
-		.catch(function(error) {
-			console.error('Authentication failed:', error);
-		});
 
 	$scope.auth.$onAuthStateChanged(function(authData) {
 		if (authData) {
-			$scope.categories = $firebaseObject(firebaseRef.child('icons'));
+			$scope.categories = $firebaseObject(firebaseRef.child('categories'));
 			$scope.users = $firebaseObject(firebaseRef.child('users'));
 			$scope.centers = $firebaseObject(firebaseRef.child('centers'));
-			$scope.posts = $firebaseObject(firebaseRef.child('friendliness'));
+			$scope.posts = $firebaseObject(firebaseRef.child('posts'));
 		} else {
 			$scope.categories = {};
 			$scope.users = {};
 			$scope.centers = {};
 			$scope.posts = {};
+
+			$scope.auth
+				.$signInWithPopup('facebook')
+				.then(function(result) {
+					console.log('Signed in as:', result.user.uid);
+				})
+				.catch(function(error) {
+					console.error('Authentication failed:', error);
+				});
 		}
 	});
 
@@ -78,11 +77,11 @@ app.controller('appController', function(
 		});
 	};
 
-	$scope.banUser = function(user, users) {
+	$scope.changeUserPermissions = function(user, users, permissions) {
 		$scope.cancelEdits(users);
 		console.log('Ban User', user);
 		var update_package = {};
-		update_package['permissions'] = 'banned';
+		update_package['permissions'] = permissions;
 		firebaseRef.child('users/' + user.key).update(update_package);
 	};
 
@@ -126,13 +125,42 @@ app.controller('appController', function(
 					},
 					function complete() {
 						//This function executes after a successful upload
-						var downloadURL = uploadTask.snapshot.downloadURL;
-						$scope.editField(instance, tableStr, field, downloadURL);
-						instance.editing[field] = false;
+						$scope.downloadURL = uploadTask.snapshot.downloadURL;
+						if (field != '') {
+							$scope.editField(instance, tableStr, field, downloadURL);
+							instance.editing[field] = false;
+						}
 					}
 				);
 			};
 			reader.readAsArrayBuffer(photofile);
+		});
+	};
+
+	$scope.addCenter = function() {
+		console.log('add center');
+		if (!$scope.center) {
+			Materialize.toast('Required fields cannot be left blank.', 3000);
+			return;
+		}
+
+		$scope.processing = true;
+
+		firebaseRef.child('centers').child($scope.guid()).set({
+			address: $scope.center.address,
+			image: $scope.downloadURL,
+			latitude: $scope.center.latitude,
+			longitude: $scope.center.longitude,
+			phone: $scope.center.phone,
+			title: $scope.center.title
+		}, function(err) {
+			$scope.processing = false;
+			if (err) {
+				Materialize.toast(err.message, 5000);
+			} else {
+				Materialize.toast('Patient added', 3000);
+				window.location.replace('/');
+			}
 		});
 	};
 

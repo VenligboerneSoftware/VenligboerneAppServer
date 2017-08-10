@@ -20,6 +20,10 @@ app.get('/', function(req, res) {
 	res.render('index');
 });
 
+app.get('/centers', function(req, res) {
+	res.render('centers');
+});
+
 app.get('/jimp', function(req, res) {
 	pinify(req.query.input, function(buffer) {
 		res.send(buffer);
