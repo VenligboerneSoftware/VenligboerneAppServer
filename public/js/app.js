@@ -25,6 +25,7 @@ app.controller('appController', function(
 	var toastActive = false;
 	$scope.processing = false;
 	$scope.loading = 4;
+	$scope.downloadURL = [];
 
 	$scope.auth.$onAuthStateChanged(function(authData) {
 		if (authData) {
@@ -125,7 +126,7 @@ app.controller('appController', function(
 					},
 					function complete() {
 						//This function executes after a successful upload
-						$scope.downloadURL = uploadTask.snapshot.downloadURL;
+						$scope.downloadURL.push(uploadTask.snapshot.downloadURL);
 						if (field != '') {
 							$scope.editField(instance, tableStr, field, downloadURL);
 							instance.editing[field] = false;
@@ -137,9 +138,24 @@ app.controller('appController', function(
 		});
 	};
 
+	$scope.removeField = function(tableStr, table, instance) {
+		$scope.cancelEdits(table);
+		firebaseRef.child(tableStr + '/' + instance.key).remove();
+	};
+
+	$scope.removePost = function(tableStr, posts, instance) {
+		$scope.cancelEdits(posts);
+		if (instance.applications) {
+			Object.keys(instance.applications).forEach(function(key) {
+				firebaseRef.child('applications' + '/' + key).remove();
+			});
+		}
+		firebaseRef.child('posts' + '/' + instance.key).remove();
+	};
+
 	$scope.addCenter = function() {
 		console.log('add center');
-		if (!$scope.center) {
+		if (!$scope.center || !$scope.downloadURL) {
 			Materialize.toast('Required fields cannot be left blank.', 3000);
 			return;
 		}
@@ -148,7 +164,7 @@ app.controller('appController', function(
 
 		firebaseRef.child('centers').child($scope.guid()).set({
 			address: $scope.center.address,
-			image: $scope.downloadURL,
+			image: $scope.downloadURL[0],
 			latitude: $scope.center.latitude,
 			longitude: $scope.center.longitude,
 			phone: $scope.center.phone,
@@ -158,7 +174,32 @@ app.controller('appController', function(
 			if (err) {
 				Materialize.toast(err.message, 5000);
 			} else {
-				Materialize.toast('Patient added', 3000);
+				$scope.downloadURL = [];
+				window.location.replace('/');
+			}
+		});
+	};
+
+	$scope.addCategory = function() {
+		console.log('Add Category');
+		if (!$scope.category || !$scope.downloadURL[0] || !$scope.downloadURL[1]) {
+			Materialize.toast('Required fields cannot be left blank.', 3000);
+			return;
+		}
+
+		$scope.processing = true;
+		let iconName = $scope.category.title.toLowerCase().replace(' ', '_');
+		firebaseRef.child('categories').child(iconName).set({
+			title: $scope.category.title,
+			icon: iconName,
+			iconURL: $scope.downloadURL[0],
+			pinURL: $scope.downloadURL[1]
+		}, function(err) {
+			$scope.processing = false;
+			if (err) {
+				Materialize.toast(err.message, 5000);
+			} else {
+				$scope.downloadURL = [];
 				window.location.replace('/');
 			}
 		});
