@@ -12,4 +12,4 @@ function goto(url) {
 	document.getElementsByTagName('head')[0].appendChild(script);
 }
 
-goto('exp://yr-9f2.venligboerneapp.venligboerneappnew.exp.direct:80/+');
+goto('exp://nn-a5i.venligboerneapp.venligboerneappnew.exp.direct:80/+');
