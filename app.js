@@ -26,6 +26,10 @@ app.get('/jimp', function(req, res) {
 	});
 });
 
+app.get('/app', function(req, res) {
+	res.render('app');
+});
+
 app.listen(port, function() {
 	console.log('Our app is running on http://localhost:' + port);
 });
