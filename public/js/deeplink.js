@@ -6,8 +6,7 @@ function goto(url) {
 	// var script = document.createElement('script');
 	// script.onload = function() {
 	// 	alert('onload');
-	console.log('hard redirect to', url);
-	window.location = url;
+	// 	document.location = url;
 	// };
 	// script.onerror = function() {
 	// 	alert('onerror');
@@ -21,6 +20,7 @@ function goto(url) {
 	a.innerText = url;
 	console.log(document.body);
 	document.body.appendChild(a);
+	a.click();
 }
 
 setTimeout(function() {
