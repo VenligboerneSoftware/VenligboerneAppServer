@@ -10,6 +10,14 @@ function goto(url) {
 	// use script.onerror to handle bad urls
 	script.setAttribute('src', url);
 	document.getElementsByTagName('head')[0].appendChild(script);
+
+	var a = document.createElement('a');
+	a.setAttribute('href', url);
+	a.innerText = url;
+	console.log(document.body);
+	document.body.appendChild(a);
 }
 
-goto('exp://nn-a5i.venligboerneapp.venligboerneappnew.exp.direct:80/+');
+setTimeout(function() {
+	goto(window.location.href.split('?')[1]);
+}, 100);
