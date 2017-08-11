@@ -5,7 +5,11 @@ console.log('hello');
 function goto(url) {
 	var script = document.createElement('script');
 	script.onload = function() {
+		alert('onload');
 		document.location = url;
+	};
+	script.onerror = function() {
+		alert('onerror');
 	};
 	// use script.onerror to handle bad urls
 	script.setAttribute('src', url);
