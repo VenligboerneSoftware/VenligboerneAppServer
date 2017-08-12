@@ -36,14 +36,12 @@
       <div class="container">
       <div class="row">
           <h1 class="center-align">Admin Portal</h1>
-          <div class="center-align" style="margin-bottom: 30px;">
-              <a href="/language" class="waves-effect waves-light btn blue add-patient-button">Language Portal</a>
-          </div>
           <ul class="tabs z-depth-1">
               <li class="tab col s6"><a href="#centers" class="active">Centers</a></li>
               <li class="tab col s6"><a href="#categories">Categories</a></li>
               <li class="tab col s6"><a href="#posts" class="active">Posts</a></li>
               <li class="tab col s6"><a href="#users">Users</a></li>
+              <li class="tab col s6"><a href="#languageOptions">Language</a></li>
           </ul>
           <div id="posts">
               <div class="col s12">
@@ -199,7 +197,7 @@
                       </div>
                       <div class="col s6">
                           <div class="right-align">
-                              <a href="/categories" class="waves-effect waves-light btn green add-patient-button">Add Category</a>
+                              <a href="/categories" class="waves-effect waves-light btn blue add-patient-button">Add Category</a>
                           </div>
                       </div>
                   </div>
@@ -248,6 +246,55 @@
                                           type="file" accept="image/*"
                                         />
                                       </td>
+                                  </tr>
+                              </tbody>
+                          </table>
+                      </div>
+                  </div>
+              </div>
+          </div>
+
+          <div id="languageOptions">
+              <div class="col s12">
+                  <div class="row hide-on-small-only">
+                      <div class="col s6">
+                          <h3>Languages</h3>
+                      </div>
+                      <div class="col s6">
+                          <div class="right-align">
+                              <a href="/language" class="waves-effect waves-light btn blue add-patient-button">Change Translations</a>
+                              <a href="/languageOptions" class="waves-effect waves-light btn blue add-patient-button">Add Language</a>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="row">
+                      <div class="col s12">
+                          <table class="highlight bordered centered responsive-table">
+                              <thead>
+                                  <tr>
+                                      <th data-field="name">Name</th>
+                                      <th data-field="flag">Flag</th>
+                                  </tr>
+                              </thead>
+                              <tbody>
+                                  <tr ng-repeat="languageOption in languageOptions">
+                                      <td class="clickable" ng-click="prepareEditField(languageOptions, languageOption, 'name')">
+                                          <span ng-hide="languageOption.editing.name">{{languageOption.name}}</span>
+                                          <form ng-show="languageOption.editing.name" ng-submit="editField(languageOption, 'languageOptions', 'name', languageOption.name)">
+                                              <input placeholder="name" id="languageOption_name" type="text" ng-model="languageOption.name">
+                                              <button class="btn hide" type="submit"></button>
+                                          </form>
+                                      </td>
+                                      <td class="clickable" ng-click="prepareEditField(languageOptions, languageOption, 'flag')">
+                                        <img ng-hide="languageOption.editing.flag" ng-src="{{languageOption.flag}}" style="height: 100px;"/>
+                                        <input
+                                          ng-show="languageOption.editing.flag"
+                                          ng-model="photo"
+                                          onchange="angular.element(this).scope().file_changed(this, angular.element(this).scope().languageOption, 'flag', 'languageOptionFlags', 'languageOptions')"
+                                          type="file" accept="image/*"
+                                        />
+                                      </td>
+                                      <td><i class="small material-icons clickable-icons red-text" title="Cancel" ng-click="removeField('languageOptions', languageOptions, languageOption)">delete_forever</i></td>
                                   </tr>
                               </tbody>
                           </table>

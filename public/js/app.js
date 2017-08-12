@@ -32,11 +32,15 @@ app.controller('appController', function(
 			$scope.categories = $firebaseObject(firebaseRef.child('categories'));
 			$scope.users = $firebaseObject(firebaseRef.child('users'));
 			$scope.centers = $firebaseObject(firebaseRef.child('centers'));
+			$scope.languageOptions = $firebaseObject(
+				firebaseRef.child('languageOptions')
+			);
 			$scope.posts = $firebaseObject(firebaseRef.child('posts'));
 		} else {
 			$scope.categories = {};
 			$scope.users = {};
 			$scope.centers = {};
+			$scope.languageOptions = {};
 			$scope.posts = {};
 
 			$scope.auth
@@ -110,6 +114,7 @@ app.controller('appController', function(
 						// use the percentage as you wish, to show progress of an upload for example
 					}, // use the function below for error handling
 					function(error) {
+						console.warn('Image upload failed', error);
 						switch (error.code) {
 							case 'storage/unauthorized':
 								// User doesn't have permission to access the object
@@ -128,7 +133,12 @@ app.controller('appController', function(
 						//This function executes after a successful upload
 						$scope.downloadURL.push(uploadTask.snapshot.downloadURL);
 						if (field != '') {
-							$scope.editField(instance, tableStr, field, downloadURL);
+							$scope.editField(
+								instance,
+								tableStr,
+								field,
+								uploadTask.snapshot.downloadURL
+							);
 							instance.editing[field] = false;
 						}
 					}
@@ -172,7 +182,7 @@ app.controller('appController', function(
 
 		$scope.processing = true;
 
-		firebaseRef.child('centers').child($scope.guid()).set({
+		firebaseRef.child('centers').push({
 			address: $scope.center.address,
 			image: $scope.downloadURL[0],
 			latitude: $scope.center.latitude,
@@ -215,25 +225,26 @@ app.controller('appController', function(
 		});
 	};
 
-	$scope.guid = function() {
-		function s4() {
-			return Math.floor((1 + Math.random()) * 0x10000)
-				.toString(16)
-				.substring(1);
+	$scope.addLanguageOption = function() {
+		console.log('add language');
+		if (!$scope.languageOption || !$scope.downloadURL) {
+			Materialize.toast('Required fields cannot be left blank.', 3000);
+			return;
 		}
-		return (
-			s4() +
-			s4() +
-			'-' +
-			s4() +
-			'-' +
-			s4() +
-			'-' +
-			s4() +
-			'-' +
-			s4() +
-			s4() +
-			s4()
-		);
+
+		$scope.processing = true;
+
+		firebaseRef.child('languageOptions').child($scope.languageOption.name).set({
+			name: $scope.languageOption.name,
+			flag: $scope.downloadURL[0]
+		}, function(err) {
+			$scope.processing = false;
+			if (err) {
+				Materialize.toast(err.message, 5000);
+			} else {
+				$scope.downloadURL = [];
+				window.location.replace('/');
+			}
+		});
 	};
 });
