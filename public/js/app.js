@@ -84,10 +84,8 @@ app.controller('appController', function(
 
 	$scope.changeUserPermissions = function(user, users, permissions) {
 		$scope.cancelEdits(users);
-		console.log('Ban User', user);
-		var update_package = {};
-		update_package['permissions'] = permissions;
-		firebaseRef.child('users/' + user.key).update(update_package);
+		console.log('Change user permissions', user, 'to', permissions);
+		firebaseRef.child('users/' + user.key + '/permissions').set(permissions);
 	};
 
 	$scope.file_changed = function(element, instance, field, bucket, tableStr) {
