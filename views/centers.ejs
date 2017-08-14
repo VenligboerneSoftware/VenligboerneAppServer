@@ -47,11 +47,11 @@
                   </div>
                   <div class="row">
                       <div class="input-field col s6">
-                          <input id="latitude" type="text" ng-model="center.latitude" required>
+                          <input id="latitude" type="number" step="any" ng-model="center.latitude" required>
                           <label for="latitude">Latitude</label>
                       </div>
                       <div class="input-field col s6">
-                          <input id="longitude" type="text" ng-model="center.longitude" required>
+                          <input id="longitude" type="number" step="any" ng-model="center.longitude" required>
                           <label for="longitude">Longitude</label>
                       </div>
                   </div>
@@ -68,7 +68,22 @@
                           <label for="phone">Telephone</label>
                       </div>
                   </div>
-                  <!-- <img ng-src="{{center.image}}" style="width:100px; height: 100px;"/> -->
+                  <div class="row">
+                      <div class="input-field col s12">
+                          <img src="/img/facebook.png" class="prefix" />
+                          <input id="facebookID" type="number" class="validate" ng-model="center.facebookID">
+                          <label for="facebookID">Go to the Facebook group page and copy the number from the URL</label>
+                      </div>
+                  </div>
+
+                  <h5 style="color: grey">Hours</h5>
+                  <div class="row" ng-repeat="day in ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']">
+                      <div class="input-field col s12">
+                          <input id="{{day}}" type="text" class="validate" ng-model="center.hours[{{day}}]">
+                          <label for="{{day}}">{{day}} hours</label>
+                      </div>
+                  </div>
+
                   <h5 style="color: grey">Select Image</h5>
                   <input
                     ng-model="photo"

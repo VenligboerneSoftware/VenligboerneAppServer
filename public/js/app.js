@@ -179,15 +179,8 @@ app.controller('appController', function(
 		}
 
 		$scope.processing = true;
-
-		firebaseRef.child('centers').push({
-			address: $scope.center.address,
-			image: $scope.downloadURL[0],
-			latitude: $scope.center.latitude,
-			longitude: $scope.center.longitude,
-			phone: $scope.center.phone,
-			title: $scope.center.title
-		}, function(err) {
+		$scope.center.image = $scope.downloadURL[0];
+		firebaseRef.child('centers').push($scope.center, function(err) {
 			$scope.processing = false;
 			if (err) {
 				Materialize.toast(err.message, 5000);
