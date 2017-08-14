@@ -84,6 +84,12 @@ app.controller('appController', function(
 
 	$scope.changeUserPermissions = function(user, users, permissions) {
 		$scope.cancelEdits(users);
+		if (permissions === 'superuser') {
+			alert(
+				'You cannot give someone else superuser priveledges. Please contact the venligboerne app creators (bedelson@stanford.edu) to add a superuser.'
+			);
+			return;
+		}
 		console.log('Change user permissions', user, 'to', permissions);
 		firebaseRef.child('users/' + user.key + '/permissions').set(permissions);
 	};
