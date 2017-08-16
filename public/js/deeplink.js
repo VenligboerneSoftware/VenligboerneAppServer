@@ -15,11 +15,11 @@ window.onload = function() {
 		if (operatingSystem === 'iOS') {
 			setTimeout(function() {
 				window.location = 'https://itunes.apple.com/';
-			}, 25); //app store URL
+			}, 500); //app store URL
 		} else if (operatingSystem === 'Android') {
 			setTimeout(function() {
 				window.location = 'https://play.google.com/store?hl=en';
-			}, 25); //play store URL
+			}, 500); //play store URL
 		} else return;
 		const redirect = getParameterByName('url');
 		console.log('Redirecting to', redirect);
