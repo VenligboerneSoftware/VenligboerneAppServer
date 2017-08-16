@@ -9,7 +9,34 @@ function getParameterByName(name, url) {
 }
 
 window.onload = function() {
-	const redirect = getParameterByName('url');
-	console.log('Redirecting to', redirect);
-	window.location.replace(redirect);
+	if (typeof window.orientation !== 'undefined') {
+		//mobile device
+		const operatingSystem = getMobileOperatingSystem();
+		if (operatingSystem === 'iOS') {
+			setTimeout(function() {
+				window.location = 'https://itunes.apple.com/';
+			}, 25); //app store URL
+		} else if (operatingSystem === 'Android') {
+			setTimeout(function() {
+				window.location = 'https://play.google.com/store?hl=en';
+			}, 25); //play store URL
+		} else return;
+		const redirect = getParameterByName('url');
+		console.log('Redirecting to', redirect);
+		window.location.replace(redirect);
+	}
 };
+
+function getMobileOperatingSystem() {
+	var userAgent = navigator.userAgent || navigator.vendor || window.opera;
+
+	if (/android/i.test(userAgent)) {
+		return 'Android';
+	}
+
+	if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+		return 'iOS';
+	}
+
+	return 'unknown';
+}
