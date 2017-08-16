@@ -11,16 +11,16 @@ function getParameterByName(name, url) {
 window.onload = function() {
 	if (typeof window.orientation !== 'undefined') {
 		//mobile device
-		// const operatingSystem = getMobileOperatingSystem();
-		// if (operatingSystem === 'iOS') {
-		// 	setTimeout(function() {
-		// 		window.location = 'https://itunes.apple.com/';
-		// 	}, 500); //app store URL
-		// } else if (operatingSystem === 'Android') {
-		// 	setTimeout(function() {
-		// 		window.location = 'https://play.google.com/store?hl=en';
-		// 	}, 500); //play store URL
-		// } else return;
+		const operatingSystem = getMobileOperatingSystem();
+		if (operatingSystem === 'iOS') {
+			setTimeout(function() {
+				window.location = 'https://itunes.apple.com/';
+			}, 500); //app store URL
+		} else if (operatingSystem === 'Android') {
+			setTimeout(function() {
+				window.location = 'https://play.google.com/store?hl=en';
+			}, 500); //play store URL
+		} else return;
 		const redirect = getParameterByName('url');
 		console.log('Redirecting to', redirect);
 		window.location.replace(redirect);
