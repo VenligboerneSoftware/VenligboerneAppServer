@@ -13,12 +13,13 @@ window.onload = function() {
 		//mobile device
 		const operatingSystem = getMobileOperatingSystem();
 		if (operatingSystem === 'iOS') {
-			setTimeout(function() {
-				window.location = 'https://itunes.apple.com/';
-			}, 500); //app store URL
+			// setTimeout(function() {
+			// 	window.location = 'https://itunes.apple.com/';
+			// }, 500); //app store URL
 		} else if (operatingSystem === 'Android') {
 			setTimeout(function() {
-				window.location = 'https://play.google.com/store?hl=en';
+				window.location =
+					'https://play.google.com/store/apps/details?id=com.venligboerne.app';
 			}, 500); //play store URL
 		} else return;
 		const redirect = getParameterByName('url');
