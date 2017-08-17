@@ -11,20 +11,20 @@ function getParameterByName(name, url) {
 window.onload = function() {
 	if (typeof window.orientation !== 'undefined') {
 		//mobile device
-		const operatingSystem = getMobileOperatingSystem();
-		if (operatingSystem === 'iOS') {
-			// setTimeout(function() {
-			// 	window.location = 'https://itunes.apple.com/';
-			// }, 2000); //app store URL
-		} else if (operatingSystem === 'Android') {
-			setTimeout(function() {
-				window.location =
-					'https://play.google.com/store/apps/details?id=com.venligboerne.app';
-			}, 2000); //play store URL
-		} else return;
+		// const operatingSystem = getMobileOperatingSystem();
+		// if (operatingSystem === 'iOS') {
+		// 	// setTimeout(function() {
+		// 	// 	window.location = 'https://itunes.apple.com/';
+		// 	// }, 2000); //app store URL
+		// } else if (operatingSystem === 'Android') {
+		// 	setTimeout(function() {
+		// 		window.location =
+		// 			'https://play.google.com/store/apps/details?id=com.venligboerne.app';
+		// 	}, 2000); //play store URL
+		// }
 		const redirect = getParameterByName('url');
 		alert('Redirecting to ' + redirect);
-		window.location = redirect;
+		window.location.href = redirect;
 	}
 };
 
