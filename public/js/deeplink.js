@@ -23,7 +23,7 @@ window.onload = function() {
 			}, 2000); //play store URL
 		} else return;
 		const redirect = getParameterByName('url');
-		console.log('Redirecting to', redirect);
+		alert('Redirecting to ' + redirect);
 		window.location.replace(redirect);
 	}
 };
