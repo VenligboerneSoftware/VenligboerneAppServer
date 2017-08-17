@@ -24,7 +24,8 @@ window.onload = function() {
 		// }
 		const redirect = getParameterByName('url');
 		alert('Redirecting to ' + redirect);
-		window.location.href = redirect;
+		document.getElementById('redirect').click();
+		// window.location.href = redirect;
 	}
 };
 
