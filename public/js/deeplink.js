@@ -14,8 +14,9 @@ window.onload = function() {
 
 		const redirect = getParameterByName('url');
 		console.log('Redirecting to', redirect);
-		window.location = redirect;
-		// attemptRedirect(redirect, storeURL);
+		alert(redirect);
+		// window.location = redirect;
+		attemptRedirect(redirect, storeURL);
 	}
 };
 
