@@ -24,7 +24,7 @@ window.onload = function() {
 		} else return;
 		const redirect = getParameterByName('url');
 		alert('Redirecting to ' + redirect);
-		window.location.replace(redirect);
+		window.location = redirect;
 	}
 };
 
