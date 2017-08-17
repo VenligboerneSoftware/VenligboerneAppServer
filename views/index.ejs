@@ -78,6 +78,28 @@
           </div>
 
           <div id="users">
+              <div ng-hide="!flags" style="position: fixed; top: 0; bottom: 0; left: 0; right: 0; background-color: rgba(0,0,0,0.5); z-index: 100;">
+                <div style="background-color: white; margin: 20%">
+                  <a class='waves-effect waves-light btn blue right' ng-click="flags = null">Close</a>
+                  <table class="highlight bordered centered responsive-table">
+                      <thead>
+                          <tr>
+                              <th>Reported By</th>
+                              <th>Reason</th>
+                              <th>Regarding</th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                          <tr ng-repeat="flag in flags">
+                              <td>{{flag.flaggingUser}}</td>
+                              <td>{{flag.reason}}</td>
+                              <td><h6>{{flag.type}}</h6>{{flag.regarding}}</td>
+                          </tr>
+                      </tbody>
+                  </table>
+                </div>
+              </div>
+
               <div class="col s12">
                   <div class="row hide-on-small-only">
                       <div class="col s6">
@@ -90,8 +112,7 @@
                               <thead>
                                   <tr>
                                       <th data-field="displayName">Name</th>
-                                      <th data-field="flagged">Flagged</th>
-                                      <th data-field="flag_message">Flag Message</th>
+                                      <th data-field="flagged">Flagged?</th>
                                       <th data-field="permissions">Permissions</th>
                                       <th data-field="ban">Make Banned User</th>
                                       <th data-field="normal">Make Normal User</th>
@@ -101,8 +122,13 @@
                               <tbody>
                                   <tr ng-repeat="user in users">
                                       <td>{{user.displayName}}</td>
-                                      <td>{{user.flagged}}</td>
-                                      <td>{{user.flag_message}}</td>
+                                      <td>
+                                        <div ng-hide="!user.flags">
+                                          Yes<br>
+                                          <a class='waves-effect waves-light btn blue' ng-click="viewFlags(user.flags)">Why?</a>
+                                        </div>
+                                        <div ng-hide="user.flags">No</div>
+                                      </td>
                                       <td>{{user.permissions}}</td>
                                       <td>
                                         <i class="small material-icons clickable-icons red-text" title="Cancel" ng-hide="user.permissions == 'banned'" ng-click="changeUserPermissions(user, users, 'banned')">cancel</i>

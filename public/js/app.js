@@ -102,6 +102,45 @@ app.controller('appController', function(
 		});
 	};
 
+	$scope.viewFlags = function(flags) {
+		console.log('flags', flags);
+		$scope.flags = flags;
+
+		Object.keys(flags).forEach(function(key) {
+			const flag = flags[key];
+			firebaseRef
+				.child('users')
+				.child(flag.flaggingUser)
+				.child('displayName')
+				.once('value', function(name) {
+					$scope.flags[key].flaggingUser = name.val();
+				});
+
+			if (flag.postID) {
+				firebaseRef
+					.child('posts')
+					.child(flag.postID)
+					.once('value', function(post) {
+						$scope.flags[key].regarding =
+							post.val().title + ': ' + post.val().description;
+						$scope.$apply();
+					});
+				$scope.flags[key].type = 'Post';
+			} else if (flag.applicationID) {
+				firebaseRef
+					.child('applications')
+					.child(flag.applicationID)
+					.once('value', function(application) {
+						$scope.flags[key].regarding = application.val().message;
+						$scope.$apply();
+					});
+				$scope.flags[key].type = 'Application';
+			} else {
+				console.warn('No postID or applicationID', flag);
+			}
+		});
+	};
+
 	$scope.changeUserPermissions = function(user, users, permissions) {
 		$scope.cancelEdits(users);
 		if (permissions === 'superuser') {
