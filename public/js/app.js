@@ -29,6 +29,23 @@ app.controller('appController', function(
 
 	$scope.auth.$onAuthStateChanged(function(authData) {
 		if (authData) {
+			// Verify the user is a superuser, and if not, prompt them to switch accounts
+			console.log('Logged in', authData);
+			firebase
+				.database()
+				.ref('users')
+				.child(authData.uid)
+				.child('permissions')
+				.once('value', snap => {
+					console.log('User permissions:', snap.val());
+					if (snap.val() !== 'superuser') {
+						alert(
+							'That account does not have superuser priveledges. Try logging in with a different account or contacting the administrators (venligboerneapp@gmail.com).'
+						);
+						$scope.signIn();
+					}
+				});
+
 			$scope.categories = $firebaseObject(firebaseRef.child('categories'));
 			$scope.users = $firebaseObject(firebaseRef.child('users'));
 			$scope.centers = $firebaseObject(firebaseRef.child('centers'));
@@ -42,17 +59,20 @@ app.controller('appController', function(
 			$scope.centers = {};
 			$scope.languageOptions = {};
 			$scope.posts = {};
-
-			$scope.auth
-				.$signInWithPopup('facebook')
-				.then(function(result) {
-					console.log('Signed in as:', result.user.uid);
-				})
-				.catch(function(error) {
-					console.error('Authentication failed:', error);
-				});
+			$scope.signIn();
 		}
 	});
+
+	$scope.signIn = function() {
+		$scope.auth
+			.$signInWithPopup('facebook')
+			.then(function(result) {
+				console.log('Signed in as:', result.user.uid);
+			})
+			.catch(function(error) {
+				console.error('Authentication failed:', error);
+			});
+	};
 
 	$scope.prepareEditField = function(table, instance, field) {
 		$scope.cancelEdits(table);
