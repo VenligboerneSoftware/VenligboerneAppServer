@@ -46,6 +46,10 @@ app.get('/app', function(req, res) {
 	res.render('app');
 });
 
+app.get('/eula', function(req, res) {
+	res.render('eula');
+});
+
 app.listen(port, function() {
 	console.log('Our app is running on http://localhost:' + port);
 });
