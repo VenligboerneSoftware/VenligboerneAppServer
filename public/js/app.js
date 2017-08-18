@@ -181,6 +181,9 @@ app.controller('appController', function(
 						switch (error.code) {
 							case 'storage/unauthorized':
 								// User doesn't have permission to access the object
+								alert(
+									'It appears that you do not have access to file storage. Please contact the administrators (venligboerneapp@gmail.com) so they can add your credentials.'
+								);
 								break;
 
 							case 'storage/canceled':
