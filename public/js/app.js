@@ -141,11 +141,15 @@ app.controller('appController', function(
 		});
 	};
 
+	$scope.isNormal = function(user) {
+		return user.permissions !== 'banned' && user.permissions !== 'superuser';
+	};
+
 	$scope.changeUserPermissions = function(user, users, permissions) {
 		$scope.cancelEdits(users);
-		if (permissions === 'superuser') {
+		if (user.permissions === 'superuser' || permissions === 'superuser') {
 			alert(
-				'You cannot give someone else superuser priveledges. Please contact the venligboerne app creators (bedelson@stanford.edu) to add a superuser.'
+				'You cannot edit superuser priveledges. Please contact the venligboerne app creators (bedelson@stanford.edu) to add a superuser.'
 			);
 			return;
 		}
