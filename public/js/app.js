@@ -158,16 +158,18 @@ app.controller('appController', function(
 			var photofile = element.files[0];
 			var reader = new FileReader();
 			reader.onload = function(e) {
+				// TODO jpeg may not be the true type, but this works fine with pngs somehow
 				var blob = new Blob([e.target.result], { type: 'image/jpeg' });
 
 				Materialize.toast('Uploading...', 500, '', function() {
 					toastActive = false;
 				});
 
-				var storageUrl = bucket + '/';
-				var storageRef = firebase.storage().ref(storageUrl + photofile.name);
-				console.warn(photofile); // Watch Screenshot
-				var uploadTask = storageRef.put(blob);
+				var storageRef = firebase.storage().ref(bucket).child(instance.key);
+				var uploadTask = storageRef.put(blob, {
+					// Let the images be cached for a week
+					cacheControl: 'public, max-age=604800'
+				});
 
 				uploadTask.on(
 					'state_changed',
