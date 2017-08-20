@@ -22,9 +22,13 @@ window.onload = function() {
 				window.location =
 					'https://play.google.com/store/apps/details?id=com.venligboerne.app';
 			}, 500); //play store URL
+			const redirect = getParameterByName('url');
+			window.location.replace(redirect);
 		}
-		const redirect = getParameterByName('url');
-		window.location.replace(redirect);
+		// Temporarily moved the below code into Android Specific until Expo fixes
+		// their bug.
+		// const redirect = getParameterByName('url');
+		// window.location.replace(redirect);
 	}
 };
 
