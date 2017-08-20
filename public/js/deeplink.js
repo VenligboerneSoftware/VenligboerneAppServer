@@ -13,9 +13,10 @@ window.onload = function() {
 		//mobile device
 		const operatingSystem = getMobileOperatingSystem();
 		if (operatingSystem === 'iOS') {
-			// setTimeout(function() {
-			// 	window.location = 'https://itunes.apple.com/';
-			// }, 500); //app store URL
+			setTimeout(function() {
+				window.location =
+					'https://itunes.apple.com/us/app/venligboerne/id1263035197';
+			}, 500); //app store URL
 		} else if (operatingSystem === 'Android') {
 			setTimeout(function() {
 				window.location =
