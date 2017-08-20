@@ -141,11 +141,15 @@ app.controller('appController', function(
 		});
 	};
 
+	$scope.isNormal = function(user) {
+		return user.permissions !== 'banned' && user.permissions !== 'superuser';
+	};
+
 	$scope.changeUserPermissions = function(user, users, permissions) {
 		$scope.cancelEdits(users);
-		if (permissions === 'superuser') {
+		if (user.permissions === 'superuser' || permissions === 'superuser') {
 			alert(
-				'You cannot give someone else superuser priveledges. Please contact the venligboerne app creators (bedelson@stanford.edu) to add a superuser.'
+				'You cannot edit superuser priveledges. Please contact the venligboerne app creators (bedelson@stanford.edu) to add a superuser.'
 			);
 			return;
 		}
@@ -158,16 +162,18 @@ app.controller('appController', function(
 			var photofile = element.files[0];
 			var reader = new FileReader();
 			reader.onload = function(e) {
+				// TODO jpeg may not be the true type, but this works fine with pngs somehow
 				var blob = new Blob([e.target.result], { type: 'image/jpeg' });
 
 				Materialize.toast('Uploading...', 500, '', function() {
 					toastActive = false;
 				});
 
-				var storageUrl = bucket + '/';
-				var storageRef = firebase.storage().ref(storageUrl + photofile.name);
-				console.warn(photofile); // Watch Screenshot
-				var uploadTask = storageRef.put(blob);
+				var storageRef = firebase.storage().ref(bucket).child(instance.key);
+				var uploadTask = storageRef.put(blob, {
+					// Let the images be cached for a week
+					cacheControl: 'public, max-age=604800'
+				});
 
 				uploadTask.on(
 					'state_changed',
