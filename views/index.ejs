@@ -138,8 +138,8 @@
                                         <i class="small material-icons clickable-icons green-text" ng-click="changeUserAdminRole(user)" ng-show="user.permissions == 'banned'">done</i>
                                       </td>
                                       <td>
-                                        <i class="small material-icons clickable-icons" ng-hide="isNormal(user)" ng-click="changeUserPermissions(user, users, 'normal')">face</i>
-                                        <i class="small material-icons clickable-icons green-text" ng-show="isNormal(user)">done</i>
+                                        <i class="small material-icons clickable-icons" ng-hide="user.permissions == 'normal'" ng-click="changeUserPermissions(user, users, 'normal')">face</i>
+                                        <i class="small material-icons clickable-icons green-text" ng-show="user.permissions == 'normal'">done</i>
                                       </td>
                                       <td>
                                         <i class="small material-icons clickable-icons" ng-hide="user.permissions == 'superuser'" ng-click="changeUserPermissions(user, users, 'superuser')">people</i>

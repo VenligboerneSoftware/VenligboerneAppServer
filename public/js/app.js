@@ -151,10 +151,6 @@ app.controller('appController', function(
 		});
 	};
 
-	$scope.isNormal = function(user) {
-		return user.permissions !== 'banned' && user.permissions !== 'superuser';
-	};
-
 	$scope.changeUserPermissions = function(user, users, permissions) {
 		$scope.cancelEdits(users);
 		if (user.permissions === 'superuser' || permissions === 'superuser') {
