@@ -4,21 +4,21 @@ const FIREBASE_HOST = 'https://test-b5dbd.firebaseio.com/';
 
 app.config(function() {
 	// production database
-	// var config = {
-	// 	apiKey: 'AIzaSyCqnUPSUbAfeb9o5OLvTA7SZ0hu6P0BuT4', // Your Firebase API key
-	// 	authDomain: 'test-b5dbd.firebaseapp.com', // Your Firebase Auth domain ("*.firebaseapp.com")
-	// 	databaseURL: 'https://test-b5dbd.firebaseio.com/', // Your Firebase Database URL ("https://*.firebaseio.com")
-	// 	storageBucket: 'test-b5dbd.appspot.com' // Your Cloud Storage for Firebase bucket ("*.appspot.com")
-	// };
-
-	// development database
-	const config = {
-		apiKey: 'AIzaSyCUMKZ1Jd1_lm3a4hJkeDzockMgRh6XZeA',
-		authDomain: 'development-977e4.firebaseapp.com',
-		databaseURL: 'https://development-977e4.firebaseio.com',
-		storageBucket: 'development-977e4.appspot.com',
-		messagingSenderId: '501577540480'
+	var config = {
+		apiKey: 'AIzaSyCqnUPSUbAfeb9o5OLvTA7SZ0hu6P0BuT4', // Your Firebase API key
+		authDomain: 'test-b5dbd.firebaseapp.com', // Your Firebase Auth domain ("*.firebaseapp.com")
+		databaseURL: 'https://test-b5dbd.firebaseio.com/', // Your Firebase Database URL ("https://*.firebaseio.com")
+		storageBucket: 'test-b5dbd.appspot.com' // Your Cloud Storage for Firebase bucket ("*.appspot.com")
 	};
+
+	// // development database
+	// const config = {
+	// 	apiKey: 'AIzaSyCUMKZ1Jd1_lm3a4hJkeDzockMgRh6XZeA',
+	// 	authDomain: 'development-977e4.firebaseapp.com',
+	// 	databaseURL: 'https://development-977e4.firebaseio.com',
+	// 	storageBucket: 'development-977e4.appspot.com',
+	// 	messagingSenderId: '501577540480'
+	// };
 	firebase.initializeApp(config);
 });
 
