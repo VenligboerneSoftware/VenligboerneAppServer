@@ -63,6 +63,7 @@ app.controller('appController', function(
 				firebaseRef.child('languageOptions')
 			);
 			$scope.posts = $firebaseObject(firebaseRef.child('posts'));
+			$scope.flags = $firebaseObject(firebaseRef.child('flags'));
 		} else {
 			$scope.categories = {};
 			$scope.users = {};
@@ -112,18 +113,17 @@ app.controller('appController', function(
 		});
 	};
 
-	$scope.viewFlags = function(flags) {
-		console.log('flags', flags);
-		$scope.flags = flags;
+	$scope.viewFlags = function(userID) {
+		$scope.usersFlags = $scope.flags[userID];
 
-		Object.keys(flags).forEach(function(key) {
-			const flag = flags[key];
+		Object.keys($scope.usersFlags).forEach(function(key) {
+			const flag = $scope.usersFlags[key];
 			firebaseRef
 				.child('users')
 				.child(flag.flaggingUser)
 				.child('displayName')
 				.once('value', function(name) {
-					$scope.flags[key].flaggingUser = name.val();
+					$scope.usersFlags[key].flaggingUser = name.val();
 				});
 
 			if (flag.postID) {
@@ -131,20 +131,20 @@ app.controller('appController', function(
 					.child('posts')
 					.child(flag.postID)
 					.once('value', function(post) {
-						$scope.flags[key].regarding =
+						$scope.usersFlags[key].regarding =
 							post.val().title + ': ' + post.val().description;
 						$scope.$apply();
 					});
-				$scope.flags[key].type = 'Post';
+				$scope.usersFlags[key].type = 'Post';
 			} else if (flag.applicationID) {
 				firebaseRef
 					.child('applications')
 					.child(flag.applicationID)
 					.once('value', function(application) {
-						$scope.flags[key].regarding = application.val().message;
+						$scope.usersFlags[key].regarding = application.val().message;
 						$scope.$apply();
 					});
-				$scope.flags[key].type = 'Application';
+				$scope.usersFlags[key].type = 'Application';
 			} else {
 				console.warn('No postID or applicationID', flag);
 			}

@@ -78,9 +78,9 @@
           </div>
 
           <div id="users">
-              <div ng-hide="!flags" style="position: fixed; top: 0; bottom: 0; left: 0; right: 0; background-color: rgba(0,0,0,0.5); z-index: 100;">
+              <div ng-hide="!usersFlags" style="position: fixed; top: 0; bottom: 0; left: 0; right: 0; background-color: rgba(0,0,0,0.5); z-index: 100;">
                 <div style="background-color: white; margin: 20%">
-                  <a class='waves-effect waves-light btn blue right' ng-click="flags = null">Close</a>
+                  <a class='waves-effect waves-light btn blue right' ng-click="usersFlags = null">Close</a>
                   This user was reported by another user (or users) because their posts
                   or applications to events were deemed inappropriate. Review what other
                   users had to say about this user, and ban them from the app if necessary.
@@ -93,7 +93,7 @@
                           </tr>
                       </thead>
                       <tbody>
-                          <tr ng-repeat="flag in flags">
+                          <tr ng-repeat="flag in usersFlags">
                               <td>{{flag.flaggingUser}}</td>
                               <td>{{flag.reason}}</td>
                               <td><h6>{{flag.type}}</h6>{{flag.regarding}}</td>
@@ -123,14 +123,14 @@
                                   </tr>
                               </thead>
                               <tbody>
-                                  <tr ng-repeat="user in users">
+                                  <tr ng-repeat="(userID, user) in users">
                                       <td>{{user.displayName}}</td>
                                       <td>
-                                        <div ng-hide="!user.flags">
+                                        <div ng-hide="!flags[userID]">
                                           Yes<br>
-                                          <a class='waves-effect waves-light btn blue' ng-click="viewFlags(user.flags)">Why?</a>
+                                          <a class='waves-effect waves-light btn blue' ng-click="viewFlags(userID)">Why?</a>
                                         </div>
-                                        <div ng-hide="user.flags">No</div>
+                                        <div ng-hide="flags[userID]">No</div>
                                       </td>
                                       <td>{{user.permissions}}</td>
                                       <td>
