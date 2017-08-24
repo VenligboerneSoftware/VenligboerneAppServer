@@ -222,6 +222,10 @@ function processUpload(evt) {
 				if (row[0].length == 0) {
 					hasBlankKey = true;
 				}
+				// Remove wrapping quotes
+				row = row.map(function(str) {
+					return str.replace(/^"|"$/g, '');
+				});
 				return [row];
 			});
 
