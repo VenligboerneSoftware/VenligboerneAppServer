@@ -227,8 +227,10 @@ app.controller('appController', function(
 	};
 
 	$scope.removeField = function(tableStr, table, instance) {
-		$scope.cancelEdits(table);
-		firebaseRef.child(tableStr + '/' + instance.key).remove();
+		if (confirm('Would you really like to delete this?')) {
+			$scope.cancelEdits(table);
+			firebaseRef.child(tableStr + '/' + instance.key).remove();
+		}
 	};
 
 	//This is so stupid lol
