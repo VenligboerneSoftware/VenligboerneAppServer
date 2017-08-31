@@ -64,8 +64,8 @@
                               </thead>
                               <tbody>
                                   <tr ng-repeat="post in posts">
-                                      <td>{{post.title}}</td>
-                                      <td>{{post.description}}</td>
+                                      <td>{{post.title.original}}</td>
+                                      <td>{{post.description.original}}</td>
                                       <td>{{post.formatted_address}}</td>
                                       <td>{{post.icon}}</td>
                                       <td><i class="small material-icons clickable-icons red-text" title="Cancel" ng-click="removePost('posts', posts, post)">delete_forever</i></td>
