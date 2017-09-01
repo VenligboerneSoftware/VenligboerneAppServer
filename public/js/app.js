@@ -240,13 +240,17 @@ app.controller('appController', function(
 			if (instance.applications) {
 				Object.keys(instance.applications).forEach(function(key) {
 					firebaseRef
-						.child('applications' + '/' + key)
+						.child('applications')
+						.child(key)
 						.once('value')
 						.then(function(snapshot) {
 							var applicant = snapshot.val().applicant;
-							firebaseRef.child('applications' + '/' + key).remove();
+							firebaseRef.child('applications').child(key).remove();
 							firebaseRef
-								.child('users' + '/' + applicant + '/applications' + key)
+								.child('users')
+								.child(applicant)
+								.child('applications')
+								.child(key)
 								.remove();
 						});
 				});
