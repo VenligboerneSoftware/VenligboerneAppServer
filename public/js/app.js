@@ -133,7 +133,9 @@ app.controller('appController', function(
 					.child(flag.postID)
 					.once('value', function(post) {
 						$scope.usersFlags[key].regarding =
-							post.val().title + ': ' + post.val().description;
+							post.val().title.original +
+							': ' +
+							post.val().description.original;
 						$scope.$apply();
 					});
 				$scope.usersFlags[key].type = 'Post';
@@ -142,7 +144,9 @@ app.controller('appController', function(
 					.child('applications')
 					.child(flag.applicationID)
 					.once('value', function(application) {
-						$scope.usersFlags[key].regarding = application.val().message;
+						$scope.usersFlags[
+							key
+						].regarding = application.val().message.original;
 						$scope.$apply();
 					});
 				$scope.usersFlags[key].type = 'Application';
