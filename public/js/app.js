@@ -114,7 +114,8 @@ app.controller('appController', function(
 	};
 
 	$scope.viewFlags = function(userID) {
-		$scope.usersFlags = $scope.flags[userID];
+		$scope.usersFlags = JSON.parse(JSON.stringify($scope.flags[userID]));
+		console.log('flags', $scope.usersFlags);
 
 		Object.keys($scope.usersFlags).forEach(function(key) {
 			const flag = $scope.usersFlags[key];
