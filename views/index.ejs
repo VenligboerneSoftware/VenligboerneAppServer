@@ -79,7 +79,13 @@
 
           <div id="users">
               <div ng-hide="!usersFlags" style="position: fixed; top: 0; bottom: 0; left: 0; right: 0; background-color: rgba(0,0,0,0.5); z-index: 100;">
-                <div style="background-color: white; margin: 20%">
+                <div style="background-color: white;
+                            overflow: scroll;
+                            position: absolute;
+                            top: 20%;
+                            left: 20%;
+                            right: 20%;
+                            bottom: 20%;">
                   <a class='waves-effect waves-light btn blue right' ng-click="usersFlags = null">Close</a>
                   This user was reported by another user (or users) because their posts
                   or applications to events were deemed inappropriate. Review what other
