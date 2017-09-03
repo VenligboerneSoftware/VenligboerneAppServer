@@ -71,7 +71,7 @@
                   <div class="row">
                       <div class="input-field col s12">
                           <img src="/img/facebook.png" class="prefix" />
-                          <input id="facebookID" type="number" class="validate" ng-model="center.facebookID">
+                          <input id="facebookID" type="number" class="validate" ng-model="center.facebookID" required>
                           <label for="facebookID">Go to the Facebook group page and copy the number from the URL</label>
                       </div>
                   </div>
@@ -79,7 +79,7 @@
                   <h5 style="color: grey">Hours</h5>
                   <div class="row" ng-repeat="day in ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']">
                       <div class="input-field col s12">
-                          <input id="{{day}}" type="text" class="validate" ng-model="center.hours[{{day}}]">
+                          <input id="{{day}}" type="text" class="validate" ng-model="center.hours[day]">
                           <label for="{{day}}">{{day}} hours</label>
                       </div>
                   </div>
@@ -88,7 +88,7 @@
                   <input
                     ng-model="photo"
                     onchange="angular.element(this).scope().file_changed(this, '', '', 'centerImages', '')"
-                    type="file" accept="image/*"
+                    type="file" accept="image/*" required
                   />
                   <div class="row">
                       <div class="col m12">
