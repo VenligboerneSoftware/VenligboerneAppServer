@@ -180,7 +180,10 @@ app.controller('appController', function(
 					toastActive = false;
 				});
 
-				var storageRef = firebase.storage().ref(bucket).child(instance.key);
+				const uploadName =
+					instance.key || Math.floor(Math.random() * 1000000000) + '';
+				console.log('uploadName', uploadName);
+				var storageRef = firebase.storage().ref(bucket).child(uploadName);
 				var uploadTask = storageRef.put(blob, {
 					// Let the images be cached for a week
 					cacheControl: 'public, max-age=604800'
