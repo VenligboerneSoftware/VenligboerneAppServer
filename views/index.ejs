@@ -204,14 +204,14 @@
                                       <td class="clickable" ng-click="prepareEditField(centers, center, 'latitude')">
                                           <span ng-hide="center.editing.latitude">{{center.latitude}}</span>
                                           <form ng-show="center.editing.latitude" ng-submit="editField(center, 'centers', 'latitude', center.latitude)">
-                                              <input placeholder="latitude" id="center_latitude" type="text" ng-model="center.latitude">
+                                              <input placeholder="latitude" id="center_latitude" type="number" step="any" ng-model="center.latitude">
                                               <button class="btn hide" type="submit"></button>
                                           </form>
                                       </td>
                                       <td class="clickable" ng-click="prepareEditField(centers, center, 'longitude')">
                                           <span ng-hide="center.editing.longitude">{{center.longitude}}</span>
                                           <form ng-show="center.editing.longitude" ng-submit="editField(center, 'centers', 'longitude', center.longitude)">
-                                              <input placeholder="longitude" id="center_longitude" type="text" ng-model="center.longitude">
+                                              <input placeholder="longitude" id="center_longitude" type="number" step="any" ng-model="center.longitude">
                                               <button class="btn hide" type="submit"></button>
                                           </form>
                                       </td>
