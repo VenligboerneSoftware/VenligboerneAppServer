@@ -178,6 +178,8 @@
                                   <tr>
                                       <th data-field="title">Title</th>
                                       <th data-field="address">Address</th>
+                                      <th data-field="latitude">Latitude</th>
+                                      <th data-field="longitude">Longitude</th>
                                       <th data-field="phone">Phone</th>
                                       <th data-field="image">Image Url</th>
                                       <th data-field="delete">Delete Center</th>
@@ -196,6 +198,20 @@
                                           <span ng-hide="center.editing.address">{{center.address}}</span>
                                           <form ng-show="center.editing.address" ng-submit="editField(center, 'centers', 'address', center.address)">
                                               <input placeholder="address" id="center_address" type="text" ng-model="center.address">
+                                              <button class="btn hide" type="submit"></button>
+                                          </form>
+                                      </td>
+                                      <td class="clickable" ng-click="prepareEditField(centers, center, 'latitude')">
+                                          <span ng-hide="center.editing.latitude">{{center.latitude}}</span>
+                                          <form ng-show="center.editing.latitude" ng-submit="editField(center, 'centers', 'latitude', center.latitude)">
+                                              <input placeholder="latitude" id="center_latitude" type="text" ng-model="center.latitude">
+                                              <button class="btn hide" type="submit"></button>
+                                          </form>
+                                      </td>
+                                      <td class="clickable" ng-click="prepareEditField(centers, center, 'longitude')">
+                                          <span ng-hide="center.editing.longitude">{{center.longitude}}</span>
+                                          <form ng-show="center.editing.longitude" ng-submit="editField(center, 'centers', 'longitude', center.longitude)">
+                                              <input placeholder="longitude" id="center_longitude" type="text" ng-model="center.longitude">
                                               <button class="btn hide" type="submit"></button>
                                           </form>
                                       </td>
