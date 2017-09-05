@@ -258,7 +258,6 @@
                               <thead>
                                   <tr>
                                       <th data-field="title">Title</th>
-                                      <th data-field="icon">Icon</th>
                                       <th data-field="src">Image</th>
                                       <th data-field="OfferPin">Pin</th>
                                   </tr>
@@ -269,13 +268,6 @@
                                           <span ng-hide="category.editing.title">{{category.title}}</span>
                                           <form ng-show="category.editing.title" ng-submit="editField(category, 'categories', 'title', category.title)">
                                               <input placeholder="title" id="category_title" type="text" ng-model="category.title">
-                                              <button class="btn hide" type="submit"></button>
-                                          </form>
-                                      </td>
-                                      <td class="clickable" ng-click="prepareEditField(categories, category, 'icon')">
-                                          <span ng-hide="category.editing.icon">{{category.icon}}</span>
-                                          <form ng-show="category.editing.icon" ng-submit="editField(category, 'categories', 'icon', category.icon)">
-                                              <input placeholder="icon" id="category_icon" type="text" ng-model="category.icon">
                                               <button class="btn hide" type="submit"></button>
                                           </form>
                                       </td>
