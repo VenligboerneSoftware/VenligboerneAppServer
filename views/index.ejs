@@ -66,7 +66,7 @@
                               <tbody>
                                   <tr ng-repeat="post in posts">
                                       <td>{{post.title.original}}</td>
-                                      <td>{{users[post.owner]}}</td>
+                                      <td>{{users[post.owner].displayName}}</td>
                                       <td>{{post.description.original}}</td>
                                       <td>{{post.formatted_address}}</td>
                                       <td>{{post.icon}}</td>
